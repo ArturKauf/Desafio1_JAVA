@@ -1,15 +1,14 @@
 public class Animal {
     private final int id;
-    private TipoAnimal tipo; // Enum
+    private TipoAnimal tipo;
     private float altura;
     private float comprimento;
     private float largura;
     private float peso;
-    private StatusAnimal status; // Enum
+    private StatusAnimal status;
     private float precoVenda;
-}
-    // Construtor
-    public Animal(int id, TipoAnimal tipo, double altura, double comprimento, double largura, double peso) {
+
+    public Animal(int id, TipoAnimal tipo, float altura, float comprimento, float largura, float peso) {
         this.id = id;
         this.tipo = tipo;
         this.altura = altura;
@@ -17,66 +16,66 @@ public class Animal {
         this.largura = largura;
         this.peso = peso;
         this.status = StatusAnimal.ATIVO;
-        this.precoVenda = 0.0;
+        this.precoVenda = 0.0f;
     }
 
-    // Getters e Setters
-    public void getId(){ // Sem setter do id para não ser alterado
+    public int getId() {
         return this.id;
     }
-    
-    public void getTipo(){
+
+    public TipoAnimal getTipo() {
         return this.tipo;
     }
 
-    public void setTipo(TipoAnimal tipo){
+    public void setTipo(TipoAnimal tipo) {
         this.tipo = tipo;
     }
 
-    public void getAltura(){
+    public float getAltura() {
         return this.altura;
     }
 
-    public void setAltura(float altura){
+    public void setAltura(float altura) {
         this.altura = altura;
     }
 
-    public void getComprimento(){
+    public float getComprimento() {
         return this.comprimento;
     }
 
-    public void setComprimento(float comprimento){
+    public void setComprimento(float comprimento) {
         this.comprimento = comprimento;
     }
-    
-    public void getLargura(){
+
+    public float getLargura() {
         return this.largura;
     }
 
-    public void setLargura(float largura){
+    public void setLargura(float largura) {
         this.largura = largura;
     }
-    
-    public void getPeso(){
+
+    public float getPeso() {
         return this.peso;
     }
 
-    public void setPeso(float peso){
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 
-    public void getStatus(){
+    public StatusAnimal getStatus() {
         return this.status;
     }
 
-    public void setStatus(StatusAnimal status){
+    public void setStatus(StatusAnimal status) {
         this.status = status;
     }
 
-    public void getPrecoVenda(){
+    public float getPrecoVenda() {
         return this.precoVenda;
     }
 
-    public void setPrecoVenda(float precoVenda){
+    public void setPrecoVenda(float precoVenda) {
         this.precoVenda = precoVenda;
     }
+}
