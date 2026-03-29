@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final Animal[] animais = new Animal[100];
+    private static int quantidadeAnimais = 0;
 
     public static void main(String[] args) {
         int opcao;
@@ -75,7 +77,25 @@ public class Main {
     }
 
     private static void incluirAnimal() {
-        System.out.println("Opcao selecionada: Incluir animal");
+        if (quantidadeAnimais >= animais.length) {
+            System.out.println("Limite de animais cadastrados atingido.");
+            return;
+        }
+
+        System.out.println("\n=== INCLUIR ANIMAL ===");
+
+        int id = lerInteiro("Informe o id do animal: ");
+        TipoAnimal tipo = lerTipoAnimal();
+        float altura = lerFloat("Informe a altura do animal: ");
+        float comprimento = lerFloat("Informe o comprimento do animal: ");
+        float largura = lerFloat("Informe a largura do animal: ");
+        float peso = lerFloat("Informe o peso do animal: ");
+
+        Animal animal = new Animal(id, tipo, altura, comprimento, largura, peso);
+        animais[quantidadeAnimais] = animal;
+        quantidadeAnimais++;
+
+        System.out.println("Animal cadastrado com sucesso.");
     }
 
     private static void consultarAnimal() {
@@ -104,5 +124,64 @@ public class Main {
 
     private static void relatorioPerdas() {
         System.out.println("Opcao selecionada: Relatorio perdas");
+    }
+
+    private static int lerInteiro(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+
+            if (scanner.hasNextInt()) {
+                int valor = scanner.nextInt();
+                scanner.nextLine();
+                return valor;
+            }
+
+            System.out.println("Valor invalido. Digite um numero inteiro.");
+            scanner.nextLine();
+        }
+    }
+
+    private static float lerFloat(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+
+            if (scanner.hasNextFloat()) {
+                float valor = scanner.nextFloat();
+                scanner.nextLine();
+                return valor;
+            }
+
+            System.out.println("Valor invalido. Digite um numero.");
+            scanner.nextLine();
+        }
+    }
+
+    private static TipoAnimal lerTipoAnimal() {
+        while (true) {
+            System.out.println("Escolha o tipo do animal:");
+            System.out.println("1 - BOVINO");
+            System.out.println("2 - SUINO");
+            System.out.println("3 - EQUINO");
+            System.out.print("Digite a opcao: ");
+
+            if (scanner.hasNextInt()) {
+                int opcao = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (opcao) {
+                    case 1:
+                        return TipoAnimal.BOVINO;
+                    case 2:
+                        return TipoAnimal.SUINO;
+                    case 3:
+                        return TipoAnimal.EQUINO;
+                    default:
+                        System.out.println("Opcao invalida.");
+                }
+            } else {
+                System.out.println("Opcao invalida. Digite um numero inteiro.");
+                scanner.nextLine();
+            }
+        }
     }
 }
