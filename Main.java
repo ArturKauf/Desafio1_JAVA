@@ -97,7 +97,19 @@ public class Main {
     }
 
     private static void consultarAnimal() {
-        System.out.println("Opcao selecionada: Consultar animal");
+        System.out.println("\n=== CONSULTAR ANIMAL ===");
+        int id = lerInteiro("Digite o ID do animal: ");
+
+        Animal animal = gerenciador.buscarPorId(id);
+
+        if(animal != null){
+            System.out.println("ID: " + animal.getId());
+            System.out.println("Tipo: " + animal.getTipo());
+            System.out.println("Status: " + animal.getStatus());
+            System.out.println("Peso: " + animal.getPeso() + "kg");
+        }else{
+            System.out.println("Animal com ID " + id + " não encontrado.");
+        }
     }
 
     private static void avaliarAnimal() {
