@@ -108,14 +108,59 @@ public class Main {
             System.out.println("ID: " + animal.getId());
             System.out.println("Tipo: " + animal.getTipo());
             System.out.println("Status: " + animal.getStatus());
-            System.out.println("Peso: " + animal.getPeso() + "kg");
+            System.out.println("Peso: " + animal.getPeso() + " kg");
         } else{
             System.out.println("Animal com ID " + id + " não encontrado.");
         }
     }
 
     private static void avaliarAnimal(){
-        
+        System.out.println("\n=== AVALIAR ANIMAL ===");
+        int id = lerInteiro("Digite o ID do animal para avaliação: ");
+
+        Animal animal = gerenciador.buscarPorId(id);
+
+        if(animal != null){
+            System.out.println("\n--- Ficha Médica/Zootécnica ---");
+            System.out.println("Tipo: " + animal.getTipo());
+            System.out.println("Peso atual: " + animal.getPeso() + " kg");
+            System.out.println("Status: " + animal.getStatus());
+            System.out.println("--------------------------------");
+
+            if(animal.getStatus() != StatusAnimal.ATIVO){
+                System.out.println("Aviso: A avaliação de peso ideal é feita apenas em animais ATIVOS.");
+                return;
+            }
+
+            System.out.println("Resultado da Avaliação:");
+
+            switch (animal.getTipo()) {
+                case BOVINO:
+                    if(animal.getPeso() >= 500.0f){
+                        System.out.println("-> Classificação: PRONTO PARA VENDA.");
+                    } else{
+                        float falta = 500.0f - animal.getPeso();
+                        System.out.println("-> Classificação: EM FASE DE ENGORDAR.");
+                        System.out.printf("-> Recomendação: faltam %.2f kg para atingir o peso ideal (500kg).\n", falta);
+                    }
+                    break;
+                case SUINO:
+                    if(animal.getPeso() >= 100.0f){
+                        System.out.println("-> Classificação: PRONTO PARA VENDA");
+                    } else{
+                        float falta = 100.0f - animal.getPeso();
+                        System.out.println("-> Classificação: EM FASE DE ENGORDAR.");
+                        System.out.printf("-> Recomendação: faltam %.2f kg para atingir o peso ideal (100kg).\n", falta);
+                    }
+                    break;
+                case EQUINO:
+                    System.out.println("-> Classificação: ANIMAL DE TRABALHO / ESPORTE.");
+                    System.out.println("-> Recomendação: Manter rotina de cuidados físicos e alimentação balanceada.");
+                    break;
+            }
+        } else{
+            System.out.println("Animal não encontrado no sistema.");
+        }
     } 
 
     private static void registrarVenda() {
@@ -193,11 +238,64 @@ public class Main {
     }
 
     private static void relatorioVendas() {
-        System.out.println("Opcao selecionada: Relatorio vendas");
+        System.out.println("\n=== RELATÓRIO DE VENDAS ===");
+
+        Animal[] todos = gerenciador.getTodos();
+        boolean encontrou = false;
+        float totalArrecadado = 0.0f; //variável para somar o dinheiro
+
+        System.out.println("\n--------------------------------------");
+        System.out.printf("%-5s | %-10s | %-10s | %-10s | %-15s\n", "ID", "TIPO", "PESO", "STATUS", "PREÇO(R$)");
+        System.out.println("--------------------------------------");
+
+        for(Animal animal : todos){
+            if(animal.getStatus() == StatusAnimal.VENDIDO){
+                System.out.printf("%-5d | %-10s | %-7.2f kg | %-10s | R$ %-10.2f\n",
+                    animal.getId(),
+                    animal.getTipo(),
+                    animal.getPeso(),
+                    animal.getStatus(),
+                    animal.getPrecoVenda()
+                );
+                totalArrecadado += animal.getPrecoVenda();
+                encontrou = true;
+            }
+        }
+        System.out.println("--------------------------------------");
+
+        if(!encontrou){
+            System.out.println("Nenhuma venda registrada até o momento.");
+        } else{
+            System.out.printf("TOTAL ARRECADADO: R$ %.2f\n", totalArrecadado);
+        }
     }
 
     private static void relatorioPerdas() {
-        System.out.println("Opcao selecionada: Relatorio perdas");
+        System.out.println("\n=== RELATÓRIO DE PERDAS ===");
+
+        Animal[] todos = gerenciador.getTodos();
+        boolean encontrou = false;
+
+        System.out.println("\n--------------------------------------");
+        System.out.printf("%-5s | %-10s | %-10s | %-10s\n", "ID", "TIPO", "PESO", "STATUS");
+        System.out.println("--------------------------------------");
+
+        for(Animal animal : todos){
+            if(animal.getStatus() == StatusAnimal.PERDIDO){
+                System.out.printf("%-5d | %-10s | %-7.2f kg | %-10s\n",
+                    animal.getId(),
+                    animal.getTipo(),
+                    animal.getPeso(),
+                    animal.getStatus()
+                );
+                encontrou = true;
+            }
+        }
+        System.out.println("--------------------------------------");
+
+        if(!encontrou){
+            System.out.println("Nenhuma perda registrada até o momento.");
+        } 
     }
 
     private static int lerInteiro(String mensagem) {
