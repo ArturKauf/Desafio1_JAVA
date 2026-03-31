@@ -119,7 +119,27 @@ public class Main {
     }
 
     private static void registrarVenda() {
-        System.out.println("Opcao selecionada: Registrar venda");
+        System.out.println("\n=== REGISTRAR VENDA ===");
+        int id = lerInteiro("Digite o ID do animal vendido: ");
+
+        Animal animal = gerenciador.buscarPorId(id);
+
+        if(animal != null){
+            if(animal.getStatus() == StatusAnimal.VENDIDO){
+                System.out.println("Erro: Este animal já consta como vendido!");
+            } else if(animal.getStatus() == StatusAnimal.PERDIDO){
+                System.out.println("Erro: Não é possivel vender um animal registrado como perdido.");
+            } else{
+                float preco = lerFloat("Informe o valor de venda (R$): ");
+
+                animal.setStatus(StatusAnimal.VENDIDO);
+                animal.setPrecoVenda(preco);
+
+                System.out.println("Venda registrada com sucesso!");
+            }
+        } else{
+            System.out.println("Animla não encontrado no sistema.");
+        }
     }
 
     private static void registrarPerda() {
