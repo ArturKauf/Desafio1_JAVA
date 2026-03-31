@@ -7,6 +7,8 @@ public class Main {
     public static void main(String[] args) {
         int opcao;
 
+        carregarDadosDeTeste();
+        
         do {
             exibirMenu();
             opcao = lerOpcao();
@@ -125,7 +127,33 @@ public class Main {
     }
 
     private static void relatorioAnimaisPorTipo() {
-        System.out.println("Opcao selecionada: Relatorio animais por tipo");
+        System.out.println("\n=== RELATÓRIO: ANIMAIS POR TIPO ===");
+
+        TipoAnimal tipoDesejado = lerTipoAnimal();
+
+        Animal[] todos = gerenciador.getTodos();
+        boolean encontrou = false;
+
+        System.out.println("\n--------------------------------------");
+        System.out.printf("%-5s | %-10s | %-10s | %-10s\n", "ID", "TIPO", "STATUS", "PESO");
+        System.out.println("--------------------------------------");
+
+        for(Animal animal : todos){
+            if(animal.getTipo() == tipoDesejado){
+                System.out.printf("%-5d | %-10s | %-10s | %-5.2f kg\n",
+                    animal.getId(),
+                    animal.getTipo(),
+                    animal.getStatus(),
+                    animal.getPeso()
+                );
+                encontrou = true;
+            }
+        }
+        System.out.println("--------------------------------------");
+
+        if(!encontrou){
+            System.out.println("Nenhum animal do tipo " +tipoDesejado + " foi encontrado.");
+        }
     }
 
     private static void relatorioVendas() {
@@ -193,5 +221,17 @@ public class Main {
                 scanner.nextLine();
             }
         }
+    }
+
+    private static void carregarDadosDeTeste(){
+        System.out.println("Carregando dados de teste...");
+        
+        gerenciador.adicionar(new Animal(1, TipoAnimal.BOVINO, 1.5f, 2.0f, 0.8f, 600.5f));
+        gerenciador.adicionar(new Animal(2, TipoAnimal.BOVINO, 1.6f, 2.1f, 0.9f, 650.0f));
+        gerenciador.adicionar(new Animal(3, TipoAnimal.SUINO, 0.8f, 1.2f, 0.5f, 110.0f));
+        gerenciador.adicionar(new Animal(4, TipoAnimal.EQUINO, 1.7f, 2.3f, 0.7f, 450.0f));
+        gerenciador.adicionar(new Animal(5, TipoAnimal.SUINO, 0.7f, 1.1f, 0.6f, 95.5f));
+        
+        System.out.println("5 animais carregados com sucesso!\n");
     }
 }
