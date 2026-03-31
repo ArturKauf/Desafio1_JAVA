@@ -2,8 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Animal[] animais = new Animal[100];
-    private static int quantidadeAnimais = 0;
+    private static final GerenciadorAnimais gerenciador = new GerenciadorAnimais(100);
 
     public static void main(String[] args) {
         int opcao;
@@ -76,26 +75,25 @@ public class Main {
         }
     }
 
-    private static void incluirAnimal() {
-        if (quantidadeAnimais >= animais.length) {
-            System.out.println("Limite de animais cadastrados atingido.");
-            return;
-        }
-
+    private static void incluirAnimal(){
         System.out.println("\n=== INCLUIR ANIMAL ===");
 
         int id = lerInteiro("Informe o id do animal: ");
         TipoAnimal tipo = lerTipoAnimal();
-        float altura = lerFloat("Informe a altura do animal: ");
-        float comprimento = lerFloat("Informe o comprimento do animal: ");
-        float largura = lerFloat("Informe a largura do animal: ");
-        float peso = lerFloat("Informe o peso do animal: ");
+        float altura = lerFloat("Informe a altura: ");
+        float comprimento = lerFloat("Informe o comprimento: ");
+        float largura = lerFloat("Informe a largura: ");
+        float peso = lerFloat("Informe o peso: ");
 
-        Animal animal = new Animal(id, tipo, altura, comprimento, largura, peso);
-        animais[quantidadeAnimais] = animal;
-        quantidadeAnimais++;
+        Animal novoAnimal = new Animal(id, tipo, altura, comprimento, largura, peso);
 
-        System.out.println("Animal cadastrado com sucesso.");
+        boolean sucesso = gerenciador.adicionar(novoAnimal);
+
+        if(sucesso){
+            System.out.println("Animal cadastrado com sucesso!");
+        }else{
+            System.out.println("Erro: Limite de armazenamento atingido.");
+        }
     }
 
     private static void consultarAnimal() {
