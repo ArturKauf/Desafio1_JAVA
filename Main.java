@@ -93,7 +93,7 @@ public class Main {
 
         if(sucesso){
             System.out.println("Animal cadastrado com sucesso!");
-        }else{
+        } else{
             System.out.println("Erro: Limite de armazenamento atingido.");
         }
     }
@@ -109,14 +109,14 @@ public class Main {
             System.out.println("Tipo: " + animal.getTipo());
             System.out.println("Status: " + animal.getStatus());
             System.out.println("Peso: " + animal.getPeso() + "kg");
-        }else{
+        } else{
             System.out.println("Animal com ID " + id + " não encontrado.");
         }
     }
 
-    private static void avaliarAnimal() {
-        System.out.println("Opcao selecionada: Avaliar animal");
-    }
+    private static void avaliarAnimal(){
+        
+    } 
 
     private static void registrarVenda() {
         System.out.println("\n=== REGISTRAR VENDA ===");
@@ -138,12 +138,28 @@ public class Main {
                 System.out.println("Venda registrada com sucesso!");
             }
         } else{
-            System.out.println("Animla não encontrado no sistema.");
+            System.out.println("Animal não encontrado no sistema.");
         }
     }
 
     private static void registrarPerda() {
-        System.out.println("Opcao selecionada: Registrar perda");
+        System.out.println("\n=== REGISTRAR PERDA ===");
+        int id = lerInteiro("Digite o ID do animal perdido: ");
+
+        Animal animal = gerenciador.buscarPorId(id);
+
+        if(animal != null){
+            if(animal.getStatus() == StatusAnimal.PERDIDO){
+                System.out.println("Erro: Este animal já consta como perdido!");
+            } else if(animal.getStatus() == StatusAnimal.VENDIDO){
+                System.out.println("Erro: Não é possivel registrar perda de um animal já vendido.");
+            } else{
+                animal.setStatus(StatusAnimal.PERDIDO);
+                System.out.println("Perda registrada com sucesso!");
+            }
+        } else{
+            System.out.println("Animal não encontrado no sistema.");
+        }
     }
 
     private static void relatorioAnimaisPorTipo() {
