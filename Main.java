@@ -80,7 +80,17 @@ public class Main {
     private static void incluirAnimal(){
         System.out.println("\n=== INCLUIR ANIMAL ===");
 
-        int id = lerInteiro("Informe o id do animal: ");
+        int id;
+        while (true) {
+            id = lerInteiro("Informe o id do animal: ");
+        
+            // Verifica se o ID já está cadastrado
+            if (gerenciador.buscarPorId(id) == null) {
+                break; // Se for null, o ID está livre. Sai do laço.
+            } else {
+                System.out.println("Erro: ID existente, insira outro.");
+            }
+        }
         TipoAnimal tipo = lerTipoAnimal();
         float altura = lerFloat("Informe a altura: ");
         float comprimento = lerFloat("Informe o comprimento: ");
