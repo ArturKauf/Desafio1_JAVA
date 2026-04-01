@@ -170,6 +170,7 @@ public class Main {
                         float falta = 450.0f - animal.getPeso();
                         System.out.println("-> Classificação: ANIMAL INCAPACITADO PARA TRABALHO / ESPORTE.");
                         System.out.println("-> Recomendação: Manter rotina de cuidados físicos e alimentação balanceada.");
+                        System.out.printf("-> Recomendação: Aumentar %.2f kg para estar pronto para trabalho / esporte\n", falta);
                     }
                     break;
             }
