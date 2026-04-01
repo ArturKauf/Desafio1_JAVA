@@ -164,8 +164,13 @@ public class Main {
                     }
                     break;
                 case EQUINO:
-                    System.out.println("-> Classificação: ANIMAL DE TRABALHO / ESPORTE.");
-                    System.out.println("-> Recomendação: Manter rotina de cuidados físicos e alimentação balanceada.");
+                    if(animal.getPeso() >= 450.0f){
+                        System.out.println("-> Classificação: ANIMAL PRONTO PARA TRABALHO / ESPORTE.");
+                    }else{
+                        float falta = 450.0f - animal.getPeso();
+                        System.out.println("-> Classificação: ANIMAL INCAPACITADO PARA TRABALHO / ESPORTE.");
+                        System.out.println("-> Recomendação: Manter rotina de cuidados físicos e alimentação balanceada.");
+                    }
                     break;
             }
         } else{
